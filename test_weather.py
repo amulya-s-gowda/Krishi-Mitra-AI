@@ -1,0 +1,71 @@
+from modules.weather_data import get_weather_data
+import os
+import time
+
+# District headquarters: (latitude, longitude)
+district_coordinates = {
+    "Bagalkote": (16.1725, 75.6557),
+    "Ballari": (15.1394, 76.9214),
+    "Belagavi": (15.8497, 74.4977),
+    "Bengaluru Rural": (13.2929, 77.5377),
+    "Bengaluru Urban": (12.9716, 77.5946),
+    "Bengaluru South": (12.7150, 77.2810),
+    "Bidar": (17.9104, 77.5199),
+    "Chamarajanagara": (11.9231, 76.9398),
+    "Chikkaballapura": (13.4355, 77.7315),
+    "Chikkamagaluru": (13.3161, 75.7720),
+    "Chitradurga": (14.2251, 76.3980),
+    "Dakshina Kannada": (12.9141, 74.8560),
+    "Davanagere": (14.4644, 75.9218),
+    "Dharwad": (15.4589, 75.0078),
+    "Gadag": (15.4315, 75.6380),
+    "Hassan": (13.0033, 76.1004),
+    "Haveri": (14.7951, 75.3991),
+    "Kalaburagi": (17.3297, 76.8343),
+    "Kodagu": (12.4244, 75.7382),
+    "Kolar": (13.1367, 78.1292),
+    "Koppal": (15.3505, 76.1567),
+    "Mandya": (12.5218, 76.8951),
+    "Mysuru": (12.2958, 76.6394),
+    "Raichur": (16.2120, 77.3439),
+    "Shivamogga": (13.9299, 75.5681),
+    "Tumakuru": (13.3379, 77.1173),
+    "Udupi": (13.3409, 74.7421),
+    "Uttara Kannada": (14.8136, 74.1297),
+    "Vijayanagara": (15.2695, 76.3871),
+    "Vijayapura": (16.8302, 75.7100),
+    "Yadgir": (16.7700, 77.1376)
+}
+
+# Create data folder if it does not exist
+os.makedirs("data", exist_ok=True)
+
+# Download data for each district
+for district, coordinates in district_coordinates.items():
+
+    latitude, longitude = coordinates
+
+    print(f"\nDownloading weather data for {district}...")
+
+    try:
+        df = get_weather_data(latitude, longitude)
+
+        # Add district name to the dataset
+        df["District"] = district
+
+        # Create a CSV filename
+        filename = district.lower().replace(" ", "_")
+        filepath = f"data/{filename}_weather.csv"
+
+        # Save the data
+        df.to_csv(filepath, index=False)
+
+        print(f"Successfully saved: {filepath}")
+
+    except Exception as error:
+        print(f"Could not download {district}: {error}")
+
+    # Small pause between API requests
+    time.sleep(2)
+
+print("\nDistrict weather data collection completed!")
