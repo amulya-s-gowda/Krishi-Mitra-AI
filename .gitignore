@@ -1,9 +1,33 @@
+﻿# Python
 venv/
 .venv/
 __pycache__/
 *.py[cod]
-.streamlit/secrets.toml
+
+# Secrets
 .env
 .env.*
+.streamlit/secrets.toml
 
+# Temporary files
+*.log
+.DS_Store
+Thumbs.db
+
+# Project backups
+*.backup*
+*.bak
+
+# Large model - share separately
+historical_weather_prediction_model.pkl
+
+# Additional large and backup files
+weather_prediction_model.pkl
 deployment_backup/
+
+# Python backup files
+*_backup.py
+*before_historical_backup.py
+
+# Historical test-only data
+data/karnataka_weather_2013_2025_partial.csv

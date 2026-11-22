@@ -3,7 +3,7 @@ import joblib
 import pandas as pd
 
 # Load trained weather prediction model
-saved_data = joblib.load("weather_prediction_model_compressed.pkl")
+saved_data = joblib.load("historical_weather_prediction_model.pkl")
 
 model = saved_data["model"]
 feature_columns = saved_data["feature_columns"]
